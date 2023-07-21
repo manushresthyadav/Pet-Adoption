@@ -1,0 +1,30 @@
+.register__container > form {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid red;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.register__container > form  > div > input {
+     width: 50%;
+}
+.register__container > form > div > label { 
+width: 30%;
+}
+.register__container > form > div {
+    width: 40%;
+    /* margin: auto; */
+    display: flex;
+    
+    
+}
+.register__container > form{
+    
+    height: 100vh;
+    
+    display: flex;
+    row-gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
