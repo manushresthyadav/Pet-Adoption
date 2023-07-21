@@ -10,4 +10,10 @@ router.get('/',(req,res)=>{
     res.status(200).json(json);
 })
 
+router.post('/',(req,res)=>{
+    const details = req.body;
+    console.log(details);
+    res.status(200).send('posted');
+})
+
 module.exports = router;

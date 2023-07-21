@@ -8,7 +8,11 @@ require('dotenv').config(); //import the dotenv package to get the data and incl
 const app = express();
 const mongo_url = process.env.MONGO_URL; //got the mongo db url to connect our database
 const port = process.env.PORT;
+const cors = require('cors');
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use('/def/',route);
 
 mongoose.connect(mongo_url).then(()=>{ //connceted the database 
