@@ -1,6 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
+
+console.log('editing the file');
 
 router.get('/',(req,res)=>{
     const json = {
