@@ -22,15 +22,17 @@ const Navigate = useNavigate();
         }
 
          const registeredUser =  async function(){
-            await fetch('http://localhost:6969/def/',{
+            await fetch('http://localhost:6969/def/register',{
             method: 'POST',
             headers : {'Content-Type':'application/json'},
             body : JSON.stringify(json_details)
         });
+        alert('User is registered');
+        Navigate('Login');
         } 
 
-        alert('User is registered');
-        Navigate('/login');
+        registeredUser();
+        // Navigate('/login');
     }
     return (
         <div className="register__container">

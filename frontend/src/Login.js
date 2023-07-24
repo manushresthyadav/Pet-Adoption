@@ -26,15 +26,21 @@ const Navigate = useNavigate();
         }
 
         const loggedInUser = async function(){
-            await fetch('/def/login',{
+            const data = await fetch('http://localhost:6969/def/login',{
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body : JSON.stringify(json_details)
-            })
+            });
+            if(data.status===200){
+                alert('User is logged In');
+            Navigate('/ui');
+            }else{
+                console.log('there was some error while loggin in',data)
+            }
+            
         }
-
-        alert('User is registered');
-        Navigate('/login');
+        loggedInUser();
+      
     }
     return (
         <div className="register__container">

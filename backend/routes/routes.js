@@ -3,8 +3,13 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const userModel = require("../modals/user");
-console.log("abe ");
 
+const util = require("util");
+const crypto = require("crypto");
+const bodyParser = require("body-parser");
+// const repo = require('./repository')
+console.log("abe ");
+const scrypt = util.promisify(crypto.scrypt);
 router.get("/", (req, res) => {
   const json = {
     name: "manushresth",
@@ -20,6 +25,7 @@ router.post("/", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
+  console.log("post the user details request");
   const userEmail = req.body.email;
   const userName = req.body.name;
   const pwd = req.body.pwd;
@@ -39,10 +45,12 @@ router.post("/register", (req, res) => {
         bcrypt.genSalt(10, function (err, Salt) {
           if (err) {
             console.log("there was some error in encrypting the password", err);
+            res.status(404).json(err);
           } else {
             bcrypt.hash(pwd, Salt, function (err, hash) {
               if (err) {
                 console.log("cannot encrypt , there was some error", err);
+                res.status(404).json(err);
               } else {
                 hashedPwd = hash;
                 console.log("the hashed password is : ", hashedPwd);
@@ -69,6 +77,7 @@ router.post("/register", (req, res) => {
                       hashedPwd + "is not the encryption of",
                       pwd
                     );
+                    res.status(400).send('some error while matching the passwords');
                   }
                 });
               }
@@ -76,18 +85,46 @@ router.post("/register", (req, res) => {
           }
         });
       }
-    });
+    }).catch((err)=>res.status(404).json(err));
 });
 
+router.get("/register", (req, res) => {
+  console.log("fetch request");
+  const allUsers = userModel.find({}).then((result) => {
+    res.status(200).json(result);
+  });
+});
 
+router.post("/login", (req, res) => {
+  const { name, email, pwd } = req.body;
 
-router.post('/login',(req,res)=>{
-  const {name,email,pwd} = req.body;
-  
-  userModel.findOne({
-    name:name,
-    email:email,
-    pwd:pwd
+  userModel
+    .findOne({
+      name: name,
+      email: email,
+    })
+    .then((result) => {
+      if(result==null){
+        res.status(404).json({msg: 'no user found, please check your credentials properly'});
+      }else{
+        console.log(result.pwd);
+      const [hashed, Salt] = result.pwd.split(".");
+const login = async function(){
+  console.log(pwd);
+ 
+  bcrypt.compare(pwd,result.pwd,function(err,isValid){
+    if (isValid) {
+      res.status(200).json(result);
+      
+    } else {
+      res.status(404).json(err);
+    }
   })
+  
+}
+   login();  
+      }
+      
+    });
 });
 module.exports = router;
