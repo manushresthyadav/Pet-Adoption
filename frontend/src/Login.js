@@ -31,8 +31,11 @@ const Navigate = useNavigate();
                 headers: {'Content-Type':'application/json'},
                 body : JSON.stringify(json_details)
             });
-            if(data.status===200){
-                alert('User is logged In');
+            if(data.ok){
+                const userData = await data.json();
+                console.log(userData);
+                localStorage.setItem('jwt',userData.token);
+                // alert('User is logged In');
             Navigate('/ui');
             }else{
                 console.log('there was some error while loggin in',data)

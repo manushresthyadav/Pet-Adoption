@@ -3,7 +3,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const userModel = require("../modals/user");
-
+const jwt = require('jsonwebtoken');
 const util = require("util");
 const crypto = require("crypto");
 const bodyParser = require("body-parser");
@@ -114,7 +114,12 @@ const login = async function(){
  
   bcrypt.compare(pwd,result.pwd,function(err,isValid){
     if (isValid) {
-      res.status(200).json(result);
+      const token = jwt.sign(
+        {email:result.email,name:result.email},
+        "test123",
+        {expiresIn : "7d"}
+      )
+      res.status(200).json({...result,token:token});
       
     } else {
       res.status(404).json(err);
