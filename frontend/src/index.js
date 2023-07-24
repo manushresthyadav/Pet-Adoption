@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Login from "./Login";
 import Register from "./Register";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -9,8 +10,9 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<Register/>}>
-        
+       
       </Route>
+      <Route path="/login" element={<Login/>}></Route>
     </Routes>
   </Router>
 );
