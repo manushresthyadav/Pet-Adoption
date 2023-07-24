@@ -1,4 +1,5 @@
 const express = require("express");
+
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const userModel = require("../modals/user");
@@ -78,4 +79,15 @@ router.post("/register", (req, res) => {
     });
 });
 
+
+
+router.post('/login',(req,res)=>{
+  const {name,email,pwd} = req.body;
+  
+  userModel.findOne({
+    name:name,
+    email:email,
+    pwd:pwd
+  })
+});
 module.exports = router;
