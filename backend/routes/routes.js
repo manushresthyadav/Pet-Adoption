@@ -1,5 +1,5 @@
 const express = require("express");
-
+require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const userModel = require("../modals/user");
@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const util = require("util");
 const crypto = require("crypto");
 const bodyParser = require("body-parser");
+const jwt_secret = process.env.JWT_SECRET; 
+console.log(jwt_secret);
 // const repo = require('./repository')
 console.log("abe ");
 const scrypt = util.promisify(crypto.scrypt);
@@ -97,7 +99,7 @@ router.get("/register", (req, res) => {
 
 router.post("/login", (req, res) => {
   const { name, email, pwd } = req.body;
-
+  console.log(req.headers.authorization);
   userModel
     .findOne({
       name: name,
@@ -112,11 +114,11 @@ router.post("/login", (req, res) => {
 const login = async function(){
   console.log(pwd);
  
-  bcrypt.compare(pwd,result.pwd,function(err,isValid){
+  bcrypt.compare(pwd,result.pwd,function(err,isValid){ //isMatch or isValid , same operations to check whether the hashed password is the same pwd generated from the given user pwd.
     if (isValid) {
       const token = jwt.sign(
         {email:result.email,name:result.email},
-        "test123",
+        jwt_secret, //this is the secret which when combined with payload and header has to generate signature , if it does then the user is given the permission to acceess whatever resource it is trying to access else he/she is denied .
         {expiresIn : "7d"}
       )
       res.status(200).json({...result,token:token});
