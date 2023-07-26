@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use('/def',route);
 console.log('hueheu');
-
+  
 mongoose.connect(mongo_url).then(()=>{ //connceted the database 
  console.log('lmao')
         app.listen(port,()=>{  //after connecting the database we need to listen for any changes made to our port

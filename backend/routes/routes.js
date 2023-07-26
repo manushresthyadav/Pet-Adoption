@@ -97,6 +97,27 @@ router.get("/register", (req, res) => {
   });
 });
 
+
+router.post("/get",(req,res)=>{
+  const uid = req.body._id;
+  console.log(uid);
+  if(!uid){
+    res.status(404).json({error : 'some error'});
+  }else{
+  userModel.findById(uid).then((result)=>{
+    if(result!=undefined){
+      console.log('the user data is : ' , result);
+      res.status(200).json(result);
+    }else{
+      console.log(result);
+      res.status(404).json({error : 'unable to fetch the information , login or register again'})
+    }
+    
+  }).catch((err)=>{
+    res.status(404).json({error: err});
+  })
+}
+})
 router.post("/login", (req, res) => {
   const { name, email, pwd } = req.body;
   console.log(req.headers.authorization);
@@ -109,7 +130,7 @@ router.post("/login", (req, res) => {
       if(result==null){
         res.status(404).json({msg: 'no user found, please check your credentials properly'});
       }else{
-        console.log(result.pwd);
+       
       const [hashed, Salt] = result.pwd.split(".");
 const login = async function(){
   console.log(pwd);
@@ -120,7 +141,8 @@ const login = async function(){
         {email:result.email,name:result.email},
         jwt_secret, //this is the secret which when combined with payload and header has to generate signature , if it does then the user is given the permission to acceess whatever resource it is trying to access else he/she is denied .
         {expiresIn : "7d"}
-      )
+      );
+      console.log({...result,token});
       res.status(200).json({...result,token:token});
       
     } else {

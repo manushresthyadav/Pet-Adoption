@@ -1,0 +1,25 @@
+
+.landing__container{
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.landing__container > .navbar{
+    width: 100%;
+}
+.landing__container > .navbar > .navbar__list{
+    width: 100%;
+}
+.navbar{
+    display: flex;
+}
+.navbar__list{
+    display: flex;
+    list-style: none;
+}
+.navbar__list > div{
+    width: 50%;
+    display: flex;
+    column-gap: 40px;
+    font-size: 20px;
+    font-weight: 600;
+}

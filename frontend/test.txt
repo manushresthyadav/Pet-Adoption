@@ -1,0 +1,33 @@
+the jason web token  is divided into three main parts ->
+
+
+1.  headers : contains the metadata about the token such as the algorithm used
+2.  payload: contains any data about the user like the user id or user email 
+3.  signature : the token is valid and is not being tampered with 
+
+header and payload are hashed together with some alogirthm and they make together the signature , then we can use this json web token by passing them inside the api requests or local storage and check whether the user has the permession to access the current resource or not, this is done by hashing the secretcode along with the headers and payload ie the first two paths to verify the signature and if it matches then the user is given the permission . 
+
+
+creating the tokens and sending them back into the browser , 
+generating the token -> npm install jsonwebtoken 
+const jwt = require(jsonwebtoken)
+createToken = ()=>{
+    return jwt.sign({_id,email,userid},"your secret code",{expiresIn: 3d});
+    //remember while writing your secret code, you must be careful that it is not visible in ur github file, so you can import it from enviornment file , by process.env.SECRET , then use it. This will ensure their is no security breach in the server //
+}
+
+const jwt_token  = createToken(mongo_collection_id);
+created the json web token for the partcular user 
+
+when we are logging in we know that the password stored in our database is in the form of hashed password (salt + header) so we have to compare the inputted password by the user with the stored hashed password , we can do this with the help of bcryptjs , this is done by ->>>
+const isMatch = await bcrypt.compare(result.pwd, userpwd)
+then after this if its the match then we can login else password entered is inncorrect
+if(isMatch){
+    res.json({email , token});
+}
+else{
+    throw new Error('the password doesnt match with the hashed pwd');
+}
+
+
+PROTECTING THE ROUTES WITH THE HELP OF JWT TOKEN -> 

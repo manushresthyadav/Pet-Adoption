@@ -1,5 +1,6 @@
 .register__container > form {
     display: flex;
+    row-gap: 10px;
     flex-direction: column;
     border: 2px solid red;
     padding: 20px;
@@ -13,13 +14,39 @@
 width: 30%;
 }
 .register__container > form > div {
-    width: 40%;
+    width: 100%;
     /* margin: auto; */
     display: flex;
-    
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
     
 }
+.register__container > form > div > label {
+    font-size: 20px;
+    width: 50%;
+}
+
+.register__container > form>  button {
+    margin-top: 40px;
+    font-size: 20px;
+    padding: 10px 40px;
+    border: 2px solid black;
+}
+.register__container > form > div >input{
+    border: 2px solid black;
+    padding: 10px;
+}
+.register__container{
+    width: 100%;
+    padding: 40px;
+}
 .register__container > form{
+   max-width: 40%;
+   margin: auto;
+   border: 2px solid black;
+}
+.parent__register{
     
     height: 100vh;
     

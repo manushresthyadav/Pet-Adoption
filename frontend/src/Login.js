@@ -35,6 +35,7 @@ const Navigate = useNavigate();
                 const userData = await data.json();
                 console.log(userData);
                 localStorage.setItem('jwt',userData.token);
+                localStorage.setItem('_id',userData._doc._id);
                 // alert('User is logged In');
             Navigate('/ui');
             }else{

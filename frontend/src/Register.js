@@ -35,6 +35,7 @@ const Navigate = useNavigate();
         // Navigate('/login');
     }
     return (
+        <div className="parent__register">
         <div className="register__container">
             <form>
                 <div className="name">
@@ -64,8 +65,10 @@ const Navigate = useNavigate();
                 }}></input>
                 
                 </div>
+
                 <button type="submit" onClick={handleClick}>Register</button>
             </form>
+        </div>
         </div>
     )
 }
