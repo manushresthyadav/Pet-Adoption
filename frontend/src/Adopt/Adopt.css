@@ -1,0 +1,11 @@
+.adopt__navbar{
+    margin: 20px auto;
+}
+.adopt__navbar > ul{
+    margin: auto;
+    width: fit-content;
+    
+}
+.adopt__navbar > ul > li > a{
+    cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Adopt from "./Adopt/Adopt";
 import Landing from "./LandingPage/Landing";
 import Login from "./Login";
 import Register from "./Register";
@@ -13,6 +14,7 @@ root.render(
       <Route path="/" element={<Register/>}></Route>
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/ui" element={<Landing/>}></Route>
+      <Route path="/adopt" element={<Adopt/>}></Route>
     </Routes>
   </Router>
 );

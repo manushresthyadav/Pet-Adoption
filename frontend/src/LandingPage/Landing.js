@@ -45,14 +45,13 @@ export default function Landing(){
                     <li>LOGO AND TITLE</li>
                     </div>
                     <div>
-                    <li>HOME</li>
-                    <li>ADOPT</li>
-                    <li>SHOP</li>
+                    <li >HOME</li>
+                    <li><a href='/adopt'>ADOPT</a></li>
+                    <li><a href='/shop'>SHOP</a></li>
                     <li>CONTACT US</li>
-                    <li onClick={()=>{
-                        window.location.href="/login";
-                    }} className='cursor-pointer'>{!data && 'LOGIN'}</li>
-                    <li>{data && <h1>naam idhar</h1>}</li>
+                    <li  className='cursor-pointer'><a href='/login'>{!data && 'LOGIN'}</a></li>
+                    <li>{data && <h1>{data.name}</h1>}</li>
+
                     </div>
                 </ui>
             </navbar>
