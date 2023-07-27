@@ -1,0 +1,14 @@
+.pet_container > img{
+    width: 300px;
+    height: 250px;
+    
+    border-radius: 20px;
+}
+.pet_container{
+    max-width: 400px;
+    max-height: 200px;
+}
+.pet_container > div{
+    font-size: large;
+    font-weight: bold;
+}

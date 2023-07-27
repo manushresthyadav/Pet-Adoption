@@ -8,6 +8,7 @@ const util = require("util");
 const crypto = require("crypto");
 const bodyParser = require("body-parser");
 const protect = require('../middleware/authMiddleware');
+const petModal = require('../modals/pet');
 const jwt_secret = process.env.JWT_SECRET; 
 console.log(jwt_secret);
 console.log(protect);
@@ -17,6 +18,7 @@ const registerUser = require('../controllers/registerUser');
 const getAllUsers = require('../controllers/getAllUsers');
 const loginUser = require('../controllers/loginUser');
 const getUserById = require('../controllers/getUserById');
+const { default: mongoose } = require("mongoose");
 // const repo = require('./repository')
 console.log("abe ");
 const scrypt = util.promisify(crypto.scrypt);
@@ -40,5 +42,44 @@ router.get("/register", (req, res) => {getAllUsers(req,res)});
 
 
 router.post("/get",(req,res)=>{getUserById(req,res)});
+
 router.post("/login", asyncHandler(async(req, res,next) => { const data = loginUser(req,res);}));
+
+router.post("/add-pet",(req,res)=>{ //we will use a authorization restriction allowing only the logged in users to do this task , will be done by invoking the authMiddle ware function. Protect
+  const {name, sex , age, image , quality , color} = req.body;
+  console.log('inside the add request of pet');
+
+  if(!name || !sex || !age || !image || !color){
+    res.status(404).json({error : 'Please enter all the fields and Submit'});
+  }
+
+  const newPet = petModal({
+    name : name,
+    age: age,
+    sex : sex,
+    image : image,
+    quality : quality,
+    color : color
+  });
+
+  newPet.save().then((result)=>{
+    console.log('new pet is saved in the database');
+    res.status(200).json(newPet);
+  }).catch((err)=>{
+    res.status(404).json({error: 'there was some error while adding the data'});
+  })
+
+})
+
+router.get("/add-pet",(req,res)=>{
+  console.log('request to get all the pet details');
+
+  const data = petModal.find({}).then((result)=>{
+    console.log('got the data');
+    res.status(200).json(result);
+  }).catch((err)=>{
+    res.status(404).json({error : 'there was some error getting the data from the database'});
+  })
+})
+
 module.exports = router;

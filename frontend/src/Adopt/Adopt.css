@@ -9,3 +9,6 @@
 .adopt__navbar > ul > li > a{
     cursor: pointer;
 }
+.pet_container > image{
+    width: 200px;
+}
