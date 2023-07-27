@@ -5,8 +5,10 @@ import Adopt from "./Adopt/Adopt";
 import Landing from "./LandingPage/Landing";
 import Login from "./Login";
 import Register from "./Register";
+import AddPet from "./addPet/addPet";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
@@ -15,6 +17,7 @@ root.render(
       <Route path="/login" element={<Login/>}></Route>
       <Route path="/ui" element={<Landing/>}></Route>
       <Route path="/adopt" element={<Adopt/>}></Route>
+      <Route path="/partner" element={<AddPet/>}></Route>
     </Routes>
   </Router>
 );
