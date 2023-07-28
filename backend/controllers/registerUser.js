@@ -7,6 +7,7 @@ function registerUser(req,res){
     const userEmail = req.body.email;
     const userName = req.body.name;
     const pwd = req.body.pwd;
+    const image = req.body.image;
     userModel
       .findOne({
         email: userEmail,
@@ -44,9 +45,10 @@ function registerUser(req,res){
                         email: userEmail,
                         name: userName,
                         pwd: hashedPwd,
+                        image : image
                       });
                       newUser.save().then((result) => {
-                        console.log("new user is added", result);
+                        // console.log("new user is added", result);
                         res.status(200).json(result);
                       });
                     } else {

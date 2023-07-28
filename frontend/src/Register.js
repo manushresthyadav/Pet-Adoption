@@ -6,7 +6,8 @@ const Navigate = useNavigate();
     const [details,changeDetails] = useState({
         name:"",
         email:"",
-        pwd:""
+        pwd:"",
+        image: ""
     })
     console.log(details);
     function handleClick(e){
@@ -15,10 +16,12 @@ const Navigate = useNavigate();
         const pwd = document.getElementsByClassName("pwd")[0].lastElementChild.value;
         const email = document.getElementsByClassName("email")[0].lastElementChild.value;
         console.log(name,pwd);
+        console.log(details);
         const json_details = {
-            name : name,
-            email:email,
-            pwd : pwd
+            name : details.name,
+            email:details.email,
+            pwd : details.pwd,
+            image : details.image
         }
 
          const registeredUser =  async function(){
@@ -34,6 +37,32 @@ const Navigate = useNavigate();
         registeredUser();
         // Navigate('/login');
     }
+
+    async function handleImageChange(e) {
+        const file = e.target.files[0];
+        const base64String = await convertToString(file);
+      
+        changeDetails((prev) => {
+          return { ...prev, image: base64String };
+        });
+      }
+      
+      async function convertToString(file) {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+      
+          fileReader.readAsDataURL(file);
+      
+          fileReader.onload = () => {
+            console.log(fileReader.result);
+            resolve(fileReader.result);
+          };
+      
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        });
+      }
     return (
         <div className="parent__register">
         <div className="register__container">
@@ -47,6 +76,14 @@ const Navigate = useNavigate();
                 }}></input>
                 </div>
 
+                <div>
+        <label htmlFor="add_images">Upload Image : </label>
+        <input name="add_images" type="file" onChange={(e)=>{
+            changeDetails((prev)=>{
+                return {...prev, image : handleImageChange(e)}
+            })
+        }}></input>
+        </div>
                 <div className="email">
                 <label htmlFor="email">Enter Your Email</label>
                 <input type="text" name="email" onChange={(e)=>{

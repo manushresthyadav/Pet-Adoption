@@ -1,0 +1,27 @@
+
+
+server side socket connection ->
+installation -> npm i socket-io
+then after this require this in our js file -> 
+const io = require('socket.io')(port_number)
+specify the port number where you want the server socket to be present and run , 
+
+then connect the server side socket 
+to do so -> 
+io.on('connection',(socket)=>{
+    console.log(socket.id); //this method will run everytime your client makes a request to the server , thus making the requests processing and handling faster (and realtime)
+
+})
+
+
+BUILDING THE CLIENT SIDE SOCKET IO ->
+installation 
+npm i socket.io-client 
+
+then after this you will have to create a client side socket which is to be connected to the server side socket 
+so ,
+import {io} from "socket.io-client";
+const socket  = io('http://localhost:port_number (of your server side socket where you have the server ) );
+
+
+we need to make an auth middleware which has protect function inside it , which checks and prevents any unauthorized access of data by any registered user.

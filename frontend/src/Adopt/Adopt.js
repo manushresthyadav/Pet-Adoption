@@ -26,6 +26,7 @@ export default function useAdopt(){
         // })
     }
     return(
+        <>
         <div className="adopt__container w-full flex-col">
             <div className="adopt__navbar font-bold text-2xl items-center justify-center">
                 <ul className="flex list-none gap-x-14 ">
@@ -35,12 +36,13 @@ export default function useAdopt(){
                     <li><a href='/contact'>Contact Us</a></li>
                 </ul>
             </div>
-            
-
-            {details && details.map((elm)=>{
+        </div>
+<div className='contains__pet'>
+        {details && details.map((elm)=>{
                 {console.log(elm.image)}
                 return <PetCard elm={elm}/>
             })}
-        </div>
+            </div>
+        </>
     )
 }

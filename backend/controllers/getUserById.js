@@ -9,10 +9,10 @@ function getUserById(req,res){
   }else{
   userModel.findById(uid).then((result)=>{
     if(result!=undefined){
-      console.log('the user data is : ' , result);
+      // console.log('the user data is : ' , result);
       res.status(200).json(result);
     }else{
-      console.log(result);
+      // console.log(result);
       res.status(404).json({error : 'unable to fetch the information , login or register again'})
     }
     

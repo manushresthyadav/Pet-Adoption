@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Adopt from "./Adopt/Adopt";
+import Moredetails from './Adopt/moreDetails';
 import Landing from "./LandingPage/Landing";
 import Login from "./Login";
 import Register from "./Register";
@@ -18,6 +19,7 @@ root.render(
       <Route path="/ui" element={<Landing/>}></Route>
       <Route path="/adopt" element={<Adopt/>}></Route>
       <Route path="/partner" element={<AddPet/>}></Route>
+      <Route path="/adopt/pet-details/:id" element={<Moredetails/>}></Route>
     </Routes>
   </Router>
 );

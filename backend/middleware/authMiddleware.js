@@ -11,7 +11,7 @@ const protect = asyncHandler(async (req,res,next)=>{
             token = req.headers.authorization.split(" ")[1];  //consider the headers.authorization contianing the token in the form of  : ( Bearer Token ) , splitting to get the desired token that we want 
             const decoded = jwt.verify(token,process.env.JWT_SECRET);
 
-            req.user = await userModel.findById(decoded.id).select('-password'); //basically storing the user inside the req.user . containing all the user details 
+            req.user = await userModel.findById(decoded._id).select('-password'); //basically storing the user inside the req.user . containing all the user details 
             next();
         }
         catch(err){

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const img = process.env.BASE_64;
-console.log(img);
+console.log('base 64 is ' ,img);
 const petSchema = mongoose.Schema({
     name : {
         type: String,
@@ -26,6 +26,26 @@ const petSchema = mongoose.Schema({
     quality : {
         type : String,
         required : false
+    },
+    owner_id : {
+        type: String,
+        required: true
+    },
+    breed : {
+        type: String,
+        required: true
+    },
+    address : {
+        type: String,
+        required: true
+    },
+    number : {
+        type: Number,
+        required: true
+    },
+    reason : {
+        type: String,
+        required: true
     }
 });
 

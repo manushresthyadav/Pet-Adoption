@@ -46,20 +46,25 @@ router.post("/get",(req,res)=>{getUserById(req,res)});
 router.post("/login", asyncHandler(async(req, res,next) => { const data = loginUser(req,res);}));
 
 router.post("/add-pet",(req,res)=>{ //we will use a authorization restriction allowing only the logged in users to do this task , will be done by invoking the authMiddle ware function. Protect
-  const {name, sex , age, image , quality , color} = req.body;
-  console.log('inside the add request of pet');
+  const {name, sex , age, image , quality , color , owner_id, breed , address, number, reason} = req.body;
+  console.log('inside the add request of pet and the owner is : ', owner_id);
 
-  if(!name || !sex || !age || !image || !color){
+  if(!name || !sex || !age || !image || !color || !address || !number || !reason){
     res.status(404).json({error : 'Please enter all the fields and Submit'});
   }
-
+  console.log(typeof(image));
   const newPet = petModal({
     name : name,
     age: age,
     sex : sex,
     image : image,
     quality : quality,
-    color : color
+    color : color,
+    owner_id : owner_id,
+    breed : breed,
+    address : address,
+    number : number,
+    reason : reason
   });
 
   newPet.save().then((result)=>{
@@ -82,4 +87,16 @@ router.get("/add-pet",(req,res)=>{
   })
 })
 
+
+router.get("/pet-details/:id",(req,res)=>{
+  const id = req.params.id
+  console.log('You are requesting to get the details of individaul pets ', id);
+
+  const data = petModal.findById(id).then((result)=>{
+    console.log('getting the data');
+    res.status(200).json(result);
+  }).catch((err)=>{
+    res.status(404).json({error: 'There was some error while getting the data',err});
+  })
+})
 module.exports = router;

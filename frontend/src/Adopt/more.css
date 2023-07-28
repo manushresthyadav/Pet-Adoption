@@ -1,0 +1,105 @@
+
+
+.detailed__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px ;
+    max-width: 450px;
+    
+    min-height: 100vh;
+    /* max-height: 120vh; */
+    border: 2px solid black;
+    padding: 40px;
+}
+.detailed__container > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+}
+.r{
+    border-radius: 40%;
+}
+.pet__image{
+    width: 300px;
+    margin: auto;
+}
+.pet__details{
+    display: flex;
+    flex-direction: column;
+    /* max-width: 80%; */
+}
+.pet__quality{
+    border: 1px solid black;
+    padding: 4px;
+    margin-top: 10px;
+}
+.details__pet{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 40px;
+    /* height: 200vh; */
+}
+
+.chat{
+    margin-top: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.photo__dog{
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    width: 20%;
+    height: 400px;
+    margin: 60px auto;
+    padding: 40px;
+}
+.photo__dog > div{
+font-size: large;
+color: red;
+font-weight: bold;
+
+}
+
+.img__dog{
+    margin: auto;
+}
+.img__dog > img{
+    width: 80%;
+
+}
+
+.arrow{
+    display: flex;
+    justify-content: space-between;
+    font-size: x-large;
+    color: black;
+    cursor: pointer;
+}
+.arrow > div{
+    column-gap: 10px;
+}
+.add{
+    display: none;
+}
+.bg{
+    scale: 0.7;
+}
+.sim__img > img{
+    object-fit: contain;
+    min-height: 300px;
+    max-height: 300px;
+    width: 300px;
+
+    overflow: hidden;
+}

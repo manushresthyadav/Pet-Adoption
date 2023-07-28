@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './addPet.css';
 export default function useAddpet(){
 
@@ -10,8 +11,14 @@ export default function useAddpet(){
         color : "",
         sex : "",
         quality : "",
-        breed: ""
+        breed: "",
+        address: "",
+        number : "",
+        reason: ""
     });
+
+    const Navigate = useNavigate();
+    
     const [options,changeOption]=useState("");
     const [selected,changeSelected] = useState();
     
@@ -32,29 +39,51 @@ export default function useAddpet(){
         getData();
     },[])
     console.log(data);
-    async function convertToString(file){
-        return await new Promise((resolve,reject)=>{
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-            fileReader.onLoad = ()=>{
-                console.log(fileReader.result);
-                resolve(fileReader.result)
-            };
-            fileReader.onerror = (error)=>{
-                reject(error);
-            }
-            
-        })
-    }
+    
 
-    function handleSubmit(){
+    async function handleImageChange(e) {
+        const file = e.target.files[0];
+        const base64String = await convertToString(file);
+      
+        changeData((prev) => {
+          return { ...prev, image: base64String };
+        });
+      }
+      
+      async function convertToString(file) {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+      
+          fileReader.readAsDataURL(file);
+      
+          fileReader.onload = () => {
+            console.log(fileReader.result);
+            resolve(fileReader.result);
+          };
+      
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        });
+      }
+      
+      
+
+    function handleSubmit(e){
+        e.preventDefault();
         console.log('you are trying to submit ur form with the details ', data);
-
+        const owner_id = localStorage.getItem('_id');
+        console.log(owner_id);
         async function submitData(){
-            const data = await fetch('http://localhost:6969/def/add-pet');
-            if(data.ok){
-                const res = await data.json();
+            const dataRec = await fetch('http://localhost:6969/def/add-pet',{
+                method : 'POST',
+                body: JSON.stringify({...data,owner_id:owner_id}),
+                headers : {'Content-Type': 'application/json'}
+            });
+            if(dataRec.ok){
+                const res = await dataRec.json();
                 console.log('data received , ur pet is added', res);
+                Navigate('/adopt');
             }else{
                 console.log('there was some error while adding ur pet');
             }
@@ -99,7 +128,7 @@ return (
         <label htmlFor="add_images">Upload Image : </label>
         <input name="add_images" type="file" onChange={(e)=>{
             changeData((prev)=>{
-                return {...prev, image : convertToString(e.target.files[0])}
+                return {...prev, image : handleImageChange(e)}
             })
         }}></input>
         </div>
@@ -135,6 +164,36 @@ return (
            </div>
         </div>
 
+        <div>
+            <label htmlFor='pet_clr'>Address</label>
+            <input  name='pet_clr' onChange={(e)=>{
+                changeData((prev)=>{
+                    return {...prev,address: e.target.value}
+                })
+            }}></input>
+        </div>
+
+
+        <div>
+            <label htmlFor='pet_clr'>Phone Number</label>
+            <input  name='pet_clr' onChange={(e)=>{
+                changeData((prev)=>{
+                    return {...prev,number: e.target.value}
+                })
+            }}></input>
+        </div>
+
+        <div>
+            <label htmlFor='pet_clr'>Reason for selling</label>
+            <input  name='pet_clr' onChange={(e)=>{
+                changeData((prev)=>{
+                    return {...prev,reason: e.target.value}
+                })
+            }}></input>
+        </div>
+
+
+
         <div >
             <label htmlFor='qualities'>Describe Your Pet :</label>
             <textarea className='' name='qualities' cols={'40'} rows={'10'} onChange={(e)=>{
@@ -143,6 +202,9 @@ return (
                 })
             }}></textarea>
         </div>
+
+       
+
 
         <button className='form_btn' onClick={handleSubmit}>Submit</button>
     </form>
