@@ -2,6 +2,7 @@ import { faArrowLeft, faArrowRight, faCircle } from "@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "./loader";
 import './more.css';
 export default function useMoredetails(){
     
@@ -70,7 +71,9 @@ console.log(id);
 
         getImages();
     },[details])
-    
+    if(!details || !ownerData || !images){
+        return <Loader/>
+    }
     return(
         <>
         <div className="details__pet">

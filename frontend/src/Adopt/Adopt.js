@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
 import './Adopt.css';
+import Html from './loader';
 import PetCard from "./petCard";
 export default function useAdopt(){
-    const [details,changeDetails] = useState([]);
+    const [details,changeDetails] = useState(null);
     console.log(details);
     useEffect(()=>{
         async function getAllPets(){
             const data = await fetch('http://localhost:6969/def/add-pet');
             if(data.ok){
                 const res = await data.json();
+                
                 changeDetails((prev)=>{
+                    if(prev)
                     return [...prev,...res];
+                    else
+                    return [...res];
                 })
             }else{
                 console.log('there was some error retrieving the data from fetch request',data.error);
@@ -25,6 +30,10 @@ export default function useAdopt(){
         //     return {...prev,data};
         // })
     }
+console.log(details)
+    if(!details){
+        return <Html/>;
+    }else
     return(
         <>
         <div className="adopt__container w-full flex-col">
