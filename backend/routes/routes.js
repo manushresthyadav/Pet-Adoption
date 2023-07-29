@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const util = require("util");
 const crypto = require("crypto");
 const bodyParser = require("body-parser");
+
 const protect = require('../middleware/authMiddleware');
 const petModal = require('../modals/pet');
 const jwt_secret = process.env.JWT_SECRET; 
@@ -18,6 +19,7 @@ const registerUser = require('../controllers/registerUser');
 const getAllUsers = require('../controllers/getAllUsers');
 const loginUser = require('../controllers/loginUser');
 const getUserById = require('../controllers/getUserById');
+const getPetById = require('../controllers/getPetById');
 const { default: mongoose } = require("mongoose");
 // const repo = require('./repository')
 console.log("abe ");
@@ -99,4 +101,13 @@ router.get("/pet-details/:id",(req,res)=>{
     res.status(404).json({error: 'There was some error while getting the data',err});
   })
 })
+
+router.post('/getPetData',getPetById);
+
+//chat endpoints and routes
+
+// router.route('/chat/:id').post(protect,storeChat)
+// router.route('/chat/:id').get(protect,getAllChats);
+
+
 module.exports = router;

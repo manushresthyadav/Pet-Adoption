@@ -19,6 +19,7 @@ root.render(
       <Route path="/ui" element={<Landing/>}></Route>
       <Route path="/adopt" element={<Adopt/>}></Route>
       <Route path="/partner" element={<AddPet/>}></Route>
+      <Route path="/partner/:id" element={<AddPet/>}></Route>
       <Route path="/adopt/pet-details/:id" element={<Moredetails/>}></Route>
     </Routes>
   </Router>

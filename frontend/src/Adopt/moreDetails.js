@@ -1,8 +1,9 @@
 import { faArrowLeft, faArrowRight, faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "./loader";
+
 import './more.css';
 export default function useMoredetails(){
     
@@ -74,6 +75,13 @@ console.log(id);
     if(!details || !ownerData || !images){
         return <Loader/>
     }
+
+    const check = details.owner_id === localStorage.getItem('_id');
+    if(check){
+        console.log('user and owner are the same');
+    }else{
+        console.log('user and owner are differnet ');
+    }
     return(
         <>
         <div className="details__pet">
@@ -133,7 +141,8 @@ console.log(id);
                 </div>
 
                 <div className="pet__details chat">
-                    <span>Chat With Owner</span> 
+                   {!check &&  true ? <Link ><span>Chat With Owner</span> </Link> : <Link to={'/partner/'+details._id}>Edit your Post</Link>}
+                   
                 </div>
                 
             </>

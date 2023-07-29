@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import loader from '../Adopt/loader';
 import './addPet.css';
 export default function useAddpet(){
 
@@ -16,9 +17,39 @@ export default function useAddpet(){
         number : "",
         reason: ""
     });
-
+    const [chk,changechk] = useState(null);
+    const [prevImg, changePrevImg] = useState(null);
+    console.log(data);
     const Navigate = useNavigate();
-    
+    const {id} = useParams();
+    console.log(id);
+    useEffect(()=>{
+        if(id){
+
+            async function getPetData(){
+                const data = await fetch('http://localhost:6969/def/getPetData',{
+                    method : 'POST',
+                    headers : {'Content-Type' : 'application/json'},
+                    body : JSON.stringify({id})
+                })
+
+                if(data.ok){
+                    const res = await data.json();
+                    changeData(res);
+                    changechk('changedGotData');
+                    changePrevImg(res.image);
+                }else{
+                    console.log('there was some error getting the data',data.error);
+                    changechk('changedGotData');
+                }
+                
+            }
+            
+            getPetData();
+        }else{
+            changechk('changed');
+        }
+    },[])
     const [options,changeOption]=useState("");
     const [selected,changeSelected] = useState();
     
@@ -71,13 +102,19 @@ export default function useAddpet(){
 
     function handleSubmit(e){
         e.preventDefault();
+        var finalCheck;
+        if(data.image==="" && !prevImg){
+            finalCheck = prevImg;
+        }else{
+            finalCheck = data.image;
+        }
         console.log('you are trying to submit ur form with the details ', data);
         const owner_id = localStorage.getItem('_id');
         console.log(owner_id);
         async function submitData(){
             const dataRec = await fetch('http://localhost:6969/def/add-pet',{
                 method : 'POST',
-                body: JSON.stringify({...data,owner_id:owner_id}),
+                body: JSON.stringify({...data,owner_id:owner_id,image : finalCheck}),
                 headers : {'Content-Type': 'application/json'}
             });
             if(dataRec.ok){
@@ -90,12 +127,15 @@ export default function useAddpet(){
         }
         submitData();
     }
+    if(!chk){
+        return loader;
+    }else{
 return (
     <div className="addpet__container"> 
     <form className='flex flex-col pet_form'>
         <div>
         <label htmlFor="pet_name">Pet Name</label>
-        <input name="pet_name" onChange={(e)=>{
+        <input    value={data.name} name="pet_name" onChange={(e)=>{
             changeData((prev)=>{
                 return {...prev,name: e.target.value}
             })
@@ -104,7 +144,7 @@ return (
 
         <div >
             <label htmlFor='breed'>Breed</label>
-            <select onChange={(e)=>{
+            <select value={data.breed} onChange={(e)=>{
                 changeData((prev)=>{
                     return {...prev,breed: e.target.value}
                 })
@@ -117,7 +157,7 @@ return (
 
         <div>
         <label htmlFor="pet_age">Pet Age</label>
-        <input name="pet_age" onChange={(e)=>{
+        <input   value={data.age} name="pet_age" onChange={(e)=>{
             changeData((prev)=>{
                 return {...prev,age: e.target.value}
             })
@@ -126,7 +166,7 @@ return (
 
 <div>
         <label htmlFor="add_images">Upload Image : </label>
-        <input name="add_images" type="file" onChange={(e)=>{
+        <input   name="add_images" type="file" onChange={(e)=>{
             changeData((prev)=>{
                 return {...prev, image : handleImageChange(e)}
             })
@@ -135,7 +175,7 @@ return (
 
         <div>
             <label htmlFor='pet_clr'>Color</label>
-            <input  name='pet_clr' onChange={(e)=>{
+            <input value={data.color}  name='pet_clr' onChange={(e)=>{
                 changeData((prev)=>{
                     return {...prev,color: e.target.value}
                 })
@@ -146,7 +186,7 @@ return (
            <label htmlFor='Sex'>Sex</label>
            <div className='flex gap-x-8' name='Sex'>
            <label className='mr-10'>
-            <input type="radio" name="color" value="Male" onClick={(e)=>{
+            <input checked={data.sex === "Male"} type="radio" name="color" value="Male" onClick={(e)=>{
                 changeData((prev)=>{
                     return {...prev,sex: 'Male'}
                 })
@@ -154,7 +194,7 @@ return (
             Male
         </label>
         <label>
-            <input type="radio" name="color" value="Female" onClick={(e)=>{
+            <input checked={data.sex === "Female"} type="radio" name="color" value="Female" onClick={(e)=>{
                 changeData((prev)=>{
                     return {...prev,sex: 'Female'}
                 })
@@ -166,7 +206,7 @@ return (
 
         <div>
             <label htmlFor='pet_clr'>Address</label>
-            <input  name='pet_clr' onChange={(e)=>{
+            <input value={data.address}  name='pet_clr' onChange={(e)=>{
                 changeData((prev)=>{
                     return {...prev,address: e.target.value}
                 })
@@ -176,7 +216,7 @@ return (
 
         <div>
             <label htmlFor='pet_clr'>Phone Number</label>
-            <input  name='pet_clr' onChange={(e)=>{
+            <input value={data.number}  name='pet_clr' onChange={(e)=>{
                 changeData((prev)=>{
                     return {...prev,number: e.target.value}
                 })
@@ -185,7 +225,7 @@ return (
 
         <div>
             <label htmlFor='pet_clr'>Reason for selling</label>
-            <input  name='pet_clr' onChange={(e)=>{
+            <input value={data.reason}  name='pet_clr' onChange={(e)=>{
                 changeData((prev)=>{
                     return {...prev,reason: e.target.value}
                 })
@@ -196,7 +236,7 @@ return (
 
         <div >
             <label htmlFor='qualities'>Describe Your Pet :</label>
-            <textarea className='' name='qualities' cols={'40'} rows={'10'} onChange={(e)=>{
+            <textarea value={data.quality} className='' name='qualities' cols={'40'} rows={'10'} onChange={(e)=>{
                 changeData((prev)=>{
                     return {...prev,quality: e.target.value}
                 })
@@ -212,6 +252,7 @@ return (
 )
 
 
+}
 }
 
 
