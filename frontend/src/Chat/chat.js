@@ -1,4 +1,4 @@
-import { faComment, faMagnifyingGlass, faVideo } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faComment, faFaceSmile, faMagnifyingGlass, faMicrophone, faPaperclip, faShare, faVideo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import loader from "../Adopt/loader";
@@ -66,7 +66,48 @@ if(!ownerData || !loggedInData){
             <div className="logged__history"></div>
         </div>
 
-        <div className="chat__main"></div>
+        <div className="chat__main">
+            <div className="top__container">
+                <span><img src={ownerData.image}></img></span>
+                <span>{ownerData.name.charAt(0).toUpperCase()+ ownerData.name.slice(1)}</span>
+            </div>
+            <div className="horizontal__line"><span className="hlcontent">Conversation</span></div>
+            <div className="main__window"></div>
+            <div className="bottom__container">
+                <div className="input__container relative">
+                    <div className="absolute left-4 top-3"><FontAwesomeIcon icon={faMicrophone} style={{
+                        cursor: "pointer",
+                    }}/></div> 
+                    <div className=" flex posi"> <input onChange={(e)=>{
+                        e.target.nextElementSibling.classList.add('main')
+                    }} name="write"></input> <label htmlFor="write">  <span>Write Something</span> </label> </div>
+                    <div className="flex icons">
+                    <FontAwesomeIcon icon={faPaperclip} style={{
+                    fontSize : '25px',
+                    backgroundColor: 'white',
+                    cursor: "pointer"
+                }}/>
+                    <FontAwesomeIcon icon={faCamera} style={{
+                    fontSize : '25px',
+                    backgroundColor: 'white',
+                    cursor: "pointer"
+                }}/>
+                    <FontAwesomeIcon icon={faFaceSmile}  style={{
+                    fontSize : '25px',
+                    color: 'black',
+                    cursor: "pointer"
+                }} />
+                    <FontAwesomeIcon icon={faShare} style={{
+                        fontSize : '40px',
+                        color : 'blueviolet',
+                        marginLeft : '10px',
+                        cursor: "pointer"
+                    }}/>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
 
         <div className="chat__info">
             <div className="ownerData">
