@@ -114,7 +114,7 @@ export default function useAddpet(){
         async function submitData(){
             const dataRec = await fetch('http://localhost:6969/def/add-pet',{
                 method : 'POST',
-                body: JSON.stringify({...data,owner_id:owner_id,image : finalCheck}),
+                body: JSON.stringify({...data,owner_id:owner_id}),
                 headers : {'Content-Type': 'application/json'}
             });
             if(dataRec.ok){
@@ -125,7 +125,28 @@ export default function useAddpet(){
                 console.log('there was some error while adding ur pet');
             }
         }
-        submitData();
+
+
+        async function editData(){
+            const dataRec = await fetch('http://localhost:6969/def/edit-pet',{
+                method : 'PUT',
+                headers : {'Content-Type': 'application/json'},
+                body : JSON.stringify({...data,owner_id : owner_id , image : finalCheck , pet_id : id})
+            });
+
+            if(dataRec.ok){
+                const res = await dataRec.json();
+                console.log(res);
+                Navigate('/adopt/pet-details/'+id);
+            }else{
+                console.log('Some error while updating ',data.error);
+            }
+
+        }
+        if(!id){
+        submitData();}
+        else{
+        editData();}
     }
     if(!chk){
         return loader;
