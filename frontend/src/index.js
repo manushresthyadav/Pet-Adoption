@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Adopt from "./Adopt/Adopt";
 import Moredetails from './Adopt/moreDetails';
+import Chat from "./Chat/chat";
 import Landing from "./LandingPage/Landing";
 import Login from "./Login";
 import Register from "./Register";
@@ -21,7 +22,7 @@ root.render(
       <Route path="/partner" element={<AddPet/>}></Route>
       <Route path="/partner/:id" element={<AddPet/>}></Route>
       <Route path="/adopt/pet-details/:id" element={<Moredetails/>}></Route>
-      {/* <Route path="/chat/:id/:id" element={<Chat/>}></Route> */}
+      <Route path="/chat/:id/:id" element={<Chat/>}></Route>
     </Routes>
   </Router>
 );
