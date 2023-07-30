@@ -1,3 +1,88 @@
 .chat__container{
     display: flex;
+    width: 100vw;
+}
+.search{
+    margin-top: 40px;
+}
+.logged__info > div > img{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+   
+}.logged__info {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    column-gap: 20px;
+    margin-bottom: 20px;
+}
+.logged__info > div{
+    margin-left: 10px;
+}
+.chat__sidebar{
+    height: 100vh;
+    background-color: rgb(243, 241, 241);
+    width: 20%;
+    padding: 15px;
+}
+.wi{
+    width: 100%;
+}
+.dpnone{
+    display: none;
+}
+
+.ip__container >input:focus{
+outline: none;
+border: 2px solid #00754a;
+}
+.ip__container > label {
+    pointer-events: none;
+}
+.ip__container > input:focus ~ label > .df{
+    display: none;
+}
+
+
+.addeffects{
+    transform: translateY(-20px) translateX(15px) scale(0.8);
+    background-color: white;
+    padding: 0 0.2em;
+    color: #00754a;
+}
+/* main chat */
+
+.chat__main{
+width: 60%;
+}
+
+
+/* owner data container */
+
+.chat__info{
+    width: 20%;
+    background-color: rgb(243, 241, 241);
+    padding: 40px;
+}
+
+.ownerData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+   
+}
+.ownerData > img{
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+}
+
+.vertical__line{
+    height: 100px;
+    width: 2px;
+    background-color: rgb(213, 209, 209);
+    color: rgb(213, 209, 209);
 }

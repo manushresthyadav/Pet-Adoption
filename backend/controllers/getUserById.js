@@ -3,6 +3,7 @@
 const userModel = require('../modals/user');
 function getUserById(req,res){
     const uid = req.body._id;
+    console.log(req.body);
   console.log(uid);
   if(!uid){
     res.status(404).json({error : 'some error'});
