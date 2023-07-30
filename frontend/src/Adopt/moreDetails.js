@@ -141,7 +141,7 @@ console.log(id);
                 </div>
 
                 <div className="pet__details chat">
-                   {!check &&  true ? <Link ><span>Chat With Owner</span> </Link> : <Link to={'/partner/'+details._id}>Edit your Post</Link>}
+                   {!check &&  true ? <Link to={'/chat/'+details.owner_id+'/'+localStorage.getItem('_id')}><span>Chat With Owner</span> </Link> : <Link to={'/partner/'+details._id}>Edit your Post</Link>}
                    
                 </div>
                 

@@ -21,6 +21,7 @@ root.render(
       <Route path="/partner" element={<AddPet/>}></Route>
       <Route path="/partner/:id" element={<AddPet/>}></Route>
       <Route path="/adopt/pet-details/:id" element={<Moredetails/>}></Route>
+      {/* <Route path="/chat/:id/:id" element={<Chat/>}></Route> */}
     </Routes>
   </Router>
 );
